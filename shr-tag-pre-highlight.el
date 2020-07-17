@@ -4,7 +4,7 @@
 
 ;; Author: Chunyang Xu <mail@xuchunyang.me>
 ;; URL: https://github.com/xuchunyang/shr-tag-pre-highlight.el
-;; Package-Requires: ((emacs "25.1") (language-detection "0.1.0"))
+;; Package-Requires: ((emacs "25.1"))
 ;; Keywords: html
 ;; Version: 2
 
@@ -71,7 +71,6 @@
 
 (require 'shr)
 (require 'dom)                          ; 25.1+
-(require 'language-detection)
 (require 'cl-lib)
 
 
@@ -200,9 +199,7 @@ Adapted from `org-src--get-lang-mode'."
          (code (with-temp-buffer
                  (shr-generic pre)
                  (buffer-string)))
-         (lang (or (shr-tag-pre-highlight-guess-language-attr pre)
-                   (let ((sym (language-detection-string code)))
-                     (and sym (symbol-name sym)))))
+         (lang (shr-tag-pre-highlight-guess-language-attr pre))
          (mode (and lang
                     (shr-tag-pre-highlight--get-lang-mode lang))))
     (shr-ensure-newline)
